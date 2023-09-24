@@ -1,0 +1,6 @@
+[submodule "common_shell_functions"]
+	path = common_shell_functions
+	url = https://github.com/possiblynaught/common_shell_functions.git
+[submodule "english-words"]
+	path = english-words
+	url = https://github.com/dwyl/english-words.git
