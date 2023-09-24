@@ -78,7 +78,7 @@ get_random_username() {
 get_random_password() {
   local pass
   pass=$(get_random_word_number)
-  while [ "${#pass}" -lt 50 ]; do
+  while [ "${#pass}" -lt 32 ]; do
     pass="${pass}$(get_random_word_seperator)$(get_random_word_number)"
   done
   echo "$pass"
@@ -277,7 +277,7 @@ Waiting for verification code, 60 second timeout..."
   fi
 
   # Prompt user to enter code
-  prompt_copy_wait "Please enter the following verification code and select 'Verify email'" \
+  prompt_copy_wait "Please enter the following verification code and select 'Verify'" \
     "$verify_code"
 
   # Delete message
@@ -289,6 +289,19 @@ Waiting for verification code, 60 second timeout..."
     echo "#email,#password" >> "$GENERATED_ACCOUNTS"
   fi
   echo "$proton_email,$proton_pword" >> "$GENERATED_ACCOUNTS"
+  echo "$proton_email has been added to the CSV file:
+  $GENERATED_ACCOUNTS"
+
+  # Prompt user to set up account security
+  prompt_user_wait "Please verify your display name and click 'Next'"
+  prompt_user_wait "De-select 'Recovery email address' and select 'Maybe later' -> 'Confirm'"
+  prompt_user_wait "Select 'Skip' -> 'Next' -> 'Next' -> 'Get started'"
+  prompt_user_wait "Select the settings gear icon in the top-right corner -> 'All settings'"
+  prompt_user_wait "De-select all email subsciptions on the 'Dasboard' landing page"
+  prompt_user_wait "Select 'Security and privacy' on the left side and DISABLE 'Enable authentication logs'"
+  prompt_user_wait "Disable the 'Collect usage diagnostics' and 'Send crash reports' switches"
+  echo "
+Done!"
 }
 
 # Run script
