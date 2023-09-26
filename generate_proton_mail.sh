@@ -74,6 +74,11 @@ get_random_username() {
   echo "$username"
 }
 
+# Generate a shortened random username and return
+get_short_username() {
+  echo "$(get_random_word_number)$(get_random_word_number)"
+}
+
 # Generate a random password
 get_random_password() {
   local pass
@@ -222,7 +227,7 @@ create_new_proton_mail() {
   local burner_email
   proton_email=$(get_proton_address)
   proton_pword=$(get_random_password)
-  burner_inbox=$(get_random_username)
+  burner_inbox=$(get_short_username)
   burner_email=$(get_maildrop_address "$burner_inbox")
 
   # Prep other vars
@@ -244,10 +249,10 @@ create_new_proton_mail() {
   prompt_copy_wait "Please enter this verification email and select 'Get verification code'" \
     "$burner_email"
 
-  # Get verification code and set verification timeout to 60 seconds
-  timeout=$(( $(date +%s) + 60 ))
+  # Get verification code and set verification timeout to 90 seconds
+  timeout=$(( $(date +%s) + 90 ))
   echo "
-Waiting for verification code, 60 second timeout..."
+Waiting for verification code, 90 second timeout..."
   # Busy wait
   while [ "$(date +%s)" -lt "$timeout" ] && [ -z "$verify_id" ]; do
     mail_list=$(get_maildrop_mailbox_listing "$burner_inbox")
@@ -297,7 +302,7 @@ Waiting for verification code, 60 second timeout..."
   prompt_user_wait "De-select 'Recovery email address' and select 'Maybe later' -> 'Confirm'"
   prompt_user_wait "Select 'Skip' -> 'Next' -> 'Next' -> 'Get started'"
   prompt_user_wait "Select the settings gear icon in the top-right corner -> 'All settings'"
-  prompt_user_wait "De-select all email subsciptions on the 'Dasboard' landing page"
+  prompt_user_wait "De-select all email subsciptions at the bottom of the 'Dashboard' landing page"
   prompt_user_wait "Select 'Security and privacy' on the left side and DISABLE 'Enable authentication logs'"
   prompt_user_wait "Disable the 'Collect usage diagnostics' and 'Send crash reports' switches"
   echo "
