@@ -4,3 +4,6 @@
 [submodule "english-words"]
 	path = english-words
 	url = https://github.com/dwyl/english-words.git
+[submodule "shellnium"]
+	path = shellnium
+	url = https://github.com/Rasukarusan/shellnium.git
